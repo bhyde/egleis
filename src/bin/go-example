@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+export PATH=/opt/local/bin:/opt/local/bin:/opt/local/sbin:/usr/local/bin:/usr/local/sbin:/usr/bin:/usr/sbin:/bin:/sbin
+[ $TERM != 'screen ] || exec screen -d -m -S lisp $0
+cd `dirname $0`
+cd ..
+ETSY_API_KEY=${ETSY_API_KEY:-TBD}
+YAHOO_API_ID=${YAHOO_API_ID:-TBD}
+~/p/clbuild/clbuild preloaded <<EOF
+(push (probe-file ".") asdf:*central-registry*)
+(push (probe-file "../..") asdf:*central-registry*)
+(push (probe-file "/Users/bhyde/.sbcl/systems/") asdf:*central-registry*)
+(declaim (optimize (safety 1)))
+(declaim (optimize (debug 3)))
+(asdf:operate 'asdf:load-op 'market)
+(market::start-my-server :api-key "$ETSY_API_KEY" :yahoo-api-id "$YAHOO_API_ID")
+(loop (sleep 1000000))
+EOF
