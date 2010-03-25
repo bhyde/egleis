@@ -1078,6 +1078,7 @@
     (:script :type "text/javascript" "google.load(\"jquery\", \"1.3.2\")")
     (:script :type "text/javascript" :src "/js/jquery.sparkline.js")
     (:script :type "text/javascript" :src "/js/tooltip.js")
+    #+nil (:script :type "text/javascript" :src "/js/jquery.qtip-1.0.0-rc3.min.js")
     (:script :type "text/javascript" "$(function() { $('.inlinesparkline').sparkline(); });")
     (:style :type "text/css"
  
@@ -1191,20 +1192,22 @@
      (pushnew ',name hunchentoot:*dispatch-table*)))
 
 (define-file-handler favicon  (:url "/favicon.ico" :content-type "image/x-icon")
-  "../static/egleis.ico")
+  "static/egleis.ico")
 
 (define-file-handler jquery-sparklines (:url "/js/jquery.sparkline.js" :content-type "application/x-javascript")
-  "../jquery/jquery.sparkline.min.js")
+  "jquery/jquery.sparkline.min.js")
 
 (define-file-handler jquery-tooltip (:url "/js/tooltip.js" :content-type "application/x-javascript")
-  "../jquery/tooltip.js")
+  "jquery/tooltip.js")
+
+(define-file-handler jquery-tooltip (:url "/js/jquery.qtip-1.0.0-rc3.min.js" :content-type "application/x-javascript")
+  "jquery/jquery.qtip-1.0.0-rc3.min.js")
 
 (define-file-handler egleis-image (:url "/static/egleis.png" :content-type "image/png")
-  "../static/egleis.png")
+  "static/egleis.png")
 
 (define-file-handler egleis-icon-image (:url "/static/egleis-icon.png" :content-type "image/png")
-  "../static/egleis-icon.png")
-
+  "static/egleis-icon.png")
 
 
 (hunchentoot:define-easy-handler (test12 :uri "/test12") ()
@@ -1275,7 +1278,7 @@
                     with b = (sort a #'string< :key #'car)
                     with c = (sort b #'> :key #'cdr)
                     for ((tag . count) . remainder) on c by #'cdr
-                    for last-font-style = nil then font-style
+                    ; for last-font-style = nil then font-style
                     for font-style = (format nil "font-size: ~d%" (f count))
                     do (htm
                          (:span :style font-style 
