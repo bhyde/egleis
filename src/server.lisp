@@ -12,6 +12,7 @@
 
 (defun start-my-server (&key (port 4000) etsy-api-key yahoo-api-id)
   (setf hunchentoot:*session-max-time* 144000)
+  (hunchentoot:reset-session-secret)
   (setf *server* (make-instance 'hunchentoot:acceptor :port port))
   (setf etsy:*api-key* etsy-api-key)
   (setf *yahoo-app-id* yahoo-api-id)
